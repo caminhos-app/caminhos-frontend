@@ -1,0 +1,284 @@
+/* ════════════════════════════════════════════════
+   Teste.css — Caminhos
+   ════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --roxo-escuro: #2D1B69;
+  --roxo-medio:  #534AB7;
+  --roxo-claro:  #EEEDFE;
+  --dourado:     #EF9F27;
+  --teal:        #0F6E56;
+  --off-white:   #FAF9F6;
+  --cinza-texto: #4A4560;
+  --cinza-sub:   #7B7499;
+  --borda:       rgba(83, 74, 183, 0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; min-height: 100vh; background: var(--off-white); }
+
+.teste-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, rgba(83,74,183,0.05) 0%, transparent 60%);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.teste-card {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 560px;
+  box-shadow: 0 8px 40px rgba(45, 27, 105, 0.08);
+}
+
+/* ── Header ──────────────────────────────────── */
+.teste-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.teste-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--roxo-escuro);
+}
+
+.teste-badge {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--roxo-medio);
+  background: var(--roxo-claro);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ── Progresso ───────────────────────────────── */
+.teste-progress {
+  height: 6px;
+  background: var(--roxo-claro);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.teste-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--roxo-medio), var(--dourado));
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.teste-progresso-label {
+  font-size: 12px;
+  color: var(--cinza-sub);
+  text-align: right;
+  margin-bottom: 2rem;
+}
+
+/* ── Corpo da pergunta ───────────────────────── */
+.teste-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.teste-pergunta {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--roxo-escuro);
+  line-height: 1.4;
+  text-align: center;
+  min-height: 80px;
+}
+
+/* ── Labels ──────────────────────────────────── */
+.teste-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.teste-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cinza-sub);
+  background: var(--off-white);
+  border: 1.5px solid var(--borda);
+  border-radius: 8px;
+  padding: 6px 14px;
+  transition: all 0.2s;
+  text-align: center;
+  flex: 1;
+}
+
+.teste-label.ativa {
+  color: var(--roxo-medio);
+  background: var(--roxo-claro);
+  border-color: var(--roxo-medio);
+}
+
+/* ── Slider ──────────────────────────────────── */
+.teste-slider {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(
+    to right,
+    var(--roxo-medio) 0%,
+    var(--roxo-medio) calc(var(--val, 50) * 1%),
+    var(--roxo-claro) calc(var(--val, 50) * 1%),
+    var(--roxo-claro) 100%
+  );
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+}
+
+.teste-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  border: 2.5px solid var(--roxo-medio);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(83, 74, 183, 0.3);
+  transition: transform 0.15s;
+}
+
+.teste-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.teste-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  border: 2.5px solid var(--roxo-medio);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(83, 74, 183, 0.3);
+}
+
+/* ── Indicador ───────────────────────────────── */
+.teste-indicador {
+  text-align: center;
+  font-size: 14px;
+  color: var(--cinza-sub);
+  min-height: 24px;
+}
+
+.teste-indicador strong {
+  color: var(--roxo-medio);
+}
+
+/* ── Botão ───────────────────────────────────── */
+.teste-btn {
+  background: var(--roxo-medio);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.teste-btn:hover:not(:disabled) {
+  background: var(--roxo-escuro);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(45, 27, 105, 0.2);
+}
+
+.teste-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Erro ────────────────────────────────────── */
+.teste-erro {
+  font-size: 13px;
+  color: #C0392B;
+  background: #FDF0EF;
+  border: 1px solid rgba(192, 57, 43, 0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: center;
+}
+
+/* ── Loading ─────────────────────────────────── */
+.teste-loading {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.teste-loading p {
+  font-size: 16px;
+  color: var(--roxo-escuro);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+}
+
+.teste-loading-sub {
+  font-size: 14px !important;
+  color: var(--cinza-sub) !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+.teste-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--roxo-claro);
+  border-top-color: var(--roxo-medio);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Erro full ───────────────────────────────── */
+.teste-erro-full {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.teste-erro-full p {
+  font-size: 15px;
+  color: var(--cinza-texto);
+}
+
+.teste-erro-full button {
+  background: var(--roxo-medio);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}

@@ -1,0 +1,317 @@
+/* ════════════════════════════════════════════════
+   Home.css — Caminhos
+   ════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --roxo-escuro: #2D1B69;
+  --roxo-medio:  #534AB7;
+  --roxo-claro:  #EEEDFE;
+  --dourado:     #EF9F27;
+  --teal:        #0F6E56;
+  --teal-claro:  #E1F5EE;
+  --off-white:   #FAF9F6;
+  --cinza-texto: #4A4560;
+  --cinza-sub:   #7B7499;
+  --borda:       rgba(83, 74, 183, 0.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; min-height: 100vh; background: var(--off-white); }
+
+.home-root {
+  min-height: 100vh;
+  background: var(--off-white);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.home-container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 0 3rem;
+}
+
+/* ── Nav ─────────────────────────────────────── */
+.home-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  position: sticky;
+  top: 0;
+  background: rgba(250, 249, 246, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--borda);
+  z-index: 100;
+}
+
+.home-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--roxo-escuro);
+}
+
+.home-sair {
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  color: var(--cinza-sub);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+.home-sair:hover { color: var(--roxo-medio); }
+
+/* ── Hero ────────────────────────────────────── */
+.home-hero {
+  position: relative;
+  padding: 2.5rem 1.5rem 2rem;
+  overflow: hidden;
+}
+
+.home-hero-glow {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(239,159,39,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.home-saudacao {
+  font-size: 14px;
+  color: var(--cinza-sub);
+  margin-bottom: 4px;
+}
+
+.home-nome {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--roxo-escuro);
+  margin-bottom: 8px;
+}
+
+.home-missao {
+  font-size: 14px;
+  color: var(--cinza-sub);
+  line-height: 1.6;
+}
+
+/* ── Seções ──────────────────────────────────── */
+.home-section {
+  padding: 1.5rem;
+  border-top: 1px solid var(--borda);
+}
+
+.home-section-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--cinza-sub);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* ── Perfil ──────────────────────────────────── */
+.home-perfil-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.home-perfil-item {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.home-perfil-tipo {
+  font-size: 10px;
+  color: var(--cinza-sub);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.home-perfil-valor {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--roxo-escuro);
+}
+
+.home-btn-ver {
+  width: 100%;
+  background: transparent;
+  border: 1.5px solid var(--roxo-medio);
+  color: var(--roxo-medio);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+
+.home-btn-ver:hover {
+  background: var(--roxo-claro);
+}
+
+/* ── Começar ─────────────────────────────────── */
+.home-comecar-card {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.home-comecar-emoji { font-size: 36px; }
+
+.home-comecar-titulo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--roxo-escuro);
+}
+
+.home-comecar-desc {
+  font-size: 14px;
+  color: var(--cinza-sub);
+  line-height: 1.6;
+}
+
+.home-btn-cta {
+  background: var(--roxo-medio);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+
+.home-btn-cta:hover {
+  background: var(--roxo-escuro);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(45, 27, 105, 0.2);
+}
+
+/* ── Módulos ─────────────────────────────────── */
+.home-modulos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.home-modulo-card {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.home-modulo-card:hover {
+  border-color: var(--roxo-medio);
+  box-shadow: 0 4px 16px rgba(83,74,183,0.08);
+}
+
+.home-modulo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.home-icon-teal   { background: var(--teal-claro); }
+.home-icon-purple { background: var(--roxo-claro); }
+.home-icon-amber  { background: #FEF3DC; }
+
+.home-modulo-titulo {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--roxo-escuro);
+  margin-bottom: 2px;
+}
+
+.home-modulo-desc {
+  font-size: 12px;
+  color: var(--cinza-sub);
+}
+
+.home-modulo-status {
+  margin-left: auto;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.home-modulo-status.feito  { color: var(--teal); }
+.home-modulo-status.pendente { color: var(--cinza-sub); }
+
+/* ── Histórico ───────────────────────────────── */
+.home-historico {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.home-historico-item {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.home-historico-item:hover {
+  border-color: var(--roxo-medio);
+}
+
+.home-historico-mbti {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--roxo-escuro);
+  min-width: 50px;
+}
+
+.home-historico-data {
+  font-size: 13px;
+  color: var(--cinza-sub);
+  flex: 1;
+}
+
+.home-historico-arrow {
+  color: var(--cinza-sub);
+  font-size: 14px;
+}

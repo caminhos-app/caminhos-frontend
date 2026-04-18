@@ -1,0 +1,541 @@
+/* ════════════════════════════════════════════════
+   LandingPage.css — Caminhos
+   Responsivo: mobile-first + desktop
+   ════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --roxo-escuro:  #2D1B69;
+  --roxo-medio:   #534AB7;
+  --roxo-claro:   #EEEDFE;
+  --dourado:      #EF9F27;
+  --dourado-esc:  #BA7517;
+  --teal:         #0F6E56;
+  --teal-claro:   #E1F5EE;
+  --off-white:    #FAF9F6;
+  --cinza-texto:  #4A4560;
+  --cinza-sub:    #7B7499;
+  --borda:        rgba(83, 74, 183, 0.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--off-white);
+}
+
+.lp-root {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--cinza-texto);
+  width: 100%;
+  background: var(--off-white);
+}
+
+/* Container interno para centralizar conteúdo */
+.lp-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ── NAV ─────────────────────────────────────── */
+.lp-nav {
+  position: sticky;
+  top: 0;
+  background: rgba(250, 249, 246, 0.92);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  border-bottom: 1px solid var(--borda);
+}
+
+.lp-nav .lp-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.lp-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--roxo-escuro);
+  letter-spacing: 0.5px;
+}
+
+.lp-nav-btn {
+  background: transparent;
+  border: 1.5px solid var(--roxo-medio);
+  color: var(--roxo-medio);
+  padding: 8px 22px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.lp-nav-btn:hover {
+  background: var(--roxo-medio);
+  color: white;
+}
+
+/* ── HERO ────────────────────────────────────── */
+.lp-hero {
+  position: relative;
+  padding: 5rem 0 4rem;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(83,74,183,0.04) 0%, transparent 100%);
+}
+
+.lp-hero-glow {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(83,74,183,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.lp-badge {
+  display: inline-block;
+  background: var(--roxo-claro);
+  color: var(--roxo-escuro);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 18px;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.3px;
+}
+
+.lp-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 500;
+  color: var(--roxo-escuro);
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lp-h1-accent {
+  color: var(--dourado-esc);
+}
+
+.lp-sub {
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--cinza-sub);
+  line-height: 1.65;
+  margin-bottom: 2.5rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lp-cta {
+  background: var(--roxo-medio);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 16px 40px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.2px;
+  display: inline-block;
+}
+.lp-cta:hover {
+  background: var(--roxo-escuro);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(45, 27, 105, 0.25);
+}
+
+.lp-free {
+  font-size: 13px;
+  color: var(--cinza-sub);
+  margin-top: 12px;
+}
+
+/* ── SEÇÕES ──────────────────────────────────── */
+.lp-section {
+  padding: 4rem 0;
+  border-top: 1px solid var(--borda);
+}
+
+.lp-section-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cinza-sub);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* ── MÓDULOS ─────────────────────────────────── */
+.lp-modules {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .lp-modules { grid-template-columns: 1fr; }
+}
+
+.lp-module-card {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  transition: all 0.2s;
+}
+.lp-module-card:hover {
+  border-color: var(--roxo-medio);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(83,74,183,0.12);
+}
+
+.lp-module-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.lp-icon-teal   { background: var(--teal-claro); }
+.lp-icon-purple { background: var(--roxo-claro); }
+.lp-icon-amber  { background: #FEF3DC; }
+
+.lp-module-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--roxo-escuro);
+  margin-bottom: 6px;
+}
+
+.lp-module-desc {
+  font-size: 13px;
+  color: var(--cinza-sub);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.lp-module-tag {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--roxo-medio);
+  background: var(--roxo-claro);
+  padding: 3px 12px;
+  border-radius: 10px;
+}
+
+/* ── JORNADA ─────────────────────────────────── */
+.lp-journey {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 0.5rem 1.5rem;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.lp-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--borda);
+}
+.lp-step:last-child { border-bottom: none; }
+
+.lp-step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--roxo-claro);
+  color: var(--roxo-medio);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lp-step-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--roxo-escuro);
+  margin-bottom: 3px;
+}
+
+.lp-step-desc {
+  font-size: 13px;
+  color: var(--cinza-sub);
+  line-height: 1.5;
+}
+
+/* ── PROOF ───────────────────────────────────── */
+.lp-proof {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.lp-proof-card {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lp-proof-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--roxo-escuro);
+}
+
+.lp-proof-label {
+  font-size: 12px;
+  color: var(--cinza-sub);
+  line-height: 1.4;
+}
+
+/* ── DEPOIMENTOS ─────────────────────────────── */
+.lp-depos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .lp-depos { grid-template-columns: 1fr; }
+}
+
+.lp-depo {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border-left: 3px solid var(--dourado);
+}
+
+.lp-depo-text {
+  font-size: 14px;
+  color: var(--cinza-texto);
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.lp-depo-author {
+  font-size: 13px;
+  color: var(--cinza-sub);
+  font-weight: 500;
+}
+
+/* ── PLANOS ──────────────────────────────────── */
+.lp-plans {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .lp-plans { grid-template-columns: 1fr; }
+}
+
+.lp-plan {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lp-plan-featured {
+  border: 2px solid var(--roxo-medio);
+  box-shadow: 0 8px 32px rgba(83,74,183,0.12);
+}
+
+.lp-plan-badge {
+  font-size: 10px;
+  font-weight: 500;
+  background: var(--roxo-claro);
+  color: var(--roxo-medio);
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.lp-plan-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--roxo-escuro);
+}
+
+.lp-plan-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--roxo-escuro);
+}
+
+.lp-plan-feat {
+  font-size: 12px;
+  color: var(--cinza-sub);
+  line-height: 1.6;
+}
+
+/* ── FINAL CTA ───────────────────────────────── */
+.lp-final {
+  position: relative;
+  background: var(--roxo-escuro);
+  padding: 5rem 0;
+  text-align: center;
+  overflow: hidden;
+}
+
+.lp-final-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(239,159,39,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.lp-final-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 500;
+  color: white;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.lp-final-sub {
+  font-size: 16px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.lp-final .lp-cta {
+  background: var(--dourado);
+  color: var(--roxo-escuro);
+  position: relative;
+  font-weight: 600;
+}
+.lp-final .lp-cta:hover {
+  background: var(--dourado-esc);
+  box-shadow: 0 12px 32px rgba(239,159,39,0.35);
+}
+
+/* ── FOOTER ──────────────────────────────────── */
+.lp-footer {
+  padding: 2rem 0;
+  text-align: center;
+  border-top: 1px solid var(--borda);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lp-footer p {
+  font-size: 13px;
+  color: var(--cinza-sub);
+}
+/* ── ADICIONAR NO FINAL DO LandingPage.css ─────── */
+
+/* Barra de avaliação */
+.lp-rating-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.lp-stars {
+  color: var(--dourado);
+  font-size: 22px;
+  letter-spacing: 2px;
+}
+
+.lp-rating-text {
+  font-size: 14px;
+  color: var(--cinza-sub);
+  font-weight: 500;
+}
+
+/* Grid 2 colunas para depoimentos */
+.lp-depos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .lp-depos { grid-template-columns: 1fr; }
+}
+
+/* Estrelas dentro do depoimento */
+.lp-depo-stars {
+  color: var(--dourado);
+  font-size: 13px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+/* Footer do depoimento com tag do módulo */
+.lp-depo-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.lp-depo-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--roxo-medio);
+  background: var(--roxo-claro);
+  padding: 2px 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
