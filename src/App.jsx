@@ -6,6 +6,7 @@ import Onboarding  from './pages/Onboarding'
 import Teste       from './pages/Teste'
 import Resultado   from './pages/Resultado'
 import Home        from './pages/Home'
+import Pagamento   from './pages/Pagamento'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/teste"      element={<Teste />} />
         <Route path="/resultado/:sessao_id" element={<Resultado />} />
+        <Route path="/pagamento/:sessao_id" element={<Pagamento />} />
         <Route path="/home"       element={<Home />} />
         <Route path="/skyai"      element={<div style={{padding:'2rem',fontFamily:'sans-serif'}}>SkyAI — em breve</div>} />
         <Route path="/manifesto"  element={<div style={{padding:'2rem',fontFamily:'sans-serif'}}>Manifesto — em breve</div>} />
