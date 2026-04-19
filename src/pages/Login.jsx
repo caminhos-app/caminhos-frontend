@@ -1,132 +1,96 @@
-import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+﻿import { useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 import api from '../services/api'
+import './Auth.css'
 
-export default function Pagamento() {
-  const { sessao_id } = useParams()
+export default function Login() {
   const navigate = useNavigate()
-  const [pix, setPix] = useState(null)
-  const [erro, setErro] = useState(null)
-  const [statusPag, setStatusPag] = useState('aguardando')
 
-  // Cria o PIX ao abrir a página
-  useEffect(() => {
-    async function criarPix() {
-      try {
-        const { data } = await api.post('/pagamento/pix', { sessao_id })
-        setPix(data)
-      } catch (e) {
-        console.error(e)
-        setErro('Erro ao gerar PIX. Tente novamente.')
-      }
-    }
-    criarPix()
-  }, [sessao_id])
+  const [form, setForm]     = useState({ email: '', password: '' })
+  const [erro, setErro]     = useState('')
+  const [loading, setLoading] = useState(false)
 
-  // Polling para checar se foi pago
-  useEffect(() => {
-    if (!pix?.payment_id) return
-    const interval = setInterval(async () => {
-      try {
-        const { data } = await api.get(`/pagamento/status/${pix.payment_id}`)
-        if (data.status === 'approved') {
-          setStatusPag('aprovado')
-          clearInterval(interval)
-          setTimeout(() => navigate(`/resultado/${sessao_id}?premium=1`), 1500)
-        }
-      } catch (e) {
-        console.error('Polling erro:', e)
-      }
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [pix, sessao_id, navigate])
-
-  const copiarCodigo = () => {
-    navigator.clipboard.writeText(pix.qr_code)
-    alert('Código PIX copiado!')
+  function handleChange(e) {
+    const { name, value } = e.target
+    setForm(f => ({ ...f, [name]: value }))
   }
 
-  if (erro) return (
-    <div style={styles.container}>
-      <p style={{color:'#c00'}}>{erro}</p>
-      <button onClick={() => navigate(-1)} style={styles.botao}>Voltar</button>
-    </div>
-  )
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setErro('')
 
-  if (!pix) return (
-    <div style={styles.container}>
-      <p>Gerando seu PIX...</p>
-    </div>
-  )
+    if (!form.email.trim())    return setErro('Informe seu e-mail.')
+    if (!form.password.trim()) return setErro('Informe sua senha.')
 
-  if (statusPag === 'aprovado') return (
-    <div style={styles.container}>
-      <h2 style={{color:'#22c55e'}}>✓ Pagamento aprovado!</h2>
-      <p>Liberando seu relatório completo...</p>
-    </div>
-  )
+    setLoading(true)
+    try {
+      const { data } = await api.post('/auth/login', form)
+      localStorage.setItem('token',   data.access_token)
+      localStorage.setItem('refresh', data.refresh_token)
+      localStorage.setItem('usuario', JSON.stringify(data.usuario))
+      navigate('/home')
+    } catch (err) {
+      setErro(err.response?.data?.erro || 'E-mail ou senha invalidos.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.titulo}>Pague com PIX</h1>
-      <p style={styles.sub}>Valor: <strong>R$ 29,00</strong></p>
+    <div className="auth-root">
+      <div className="auth-card">
 
-      {pix.qr_code_base64 && (
-        <img
-          src={`data:image/png;base64,${pix.qr_code_base64}`}
-          alt="QR Code PIX"
-          style={styles.qr}
-        />
-      )}
+        <Link to="/" className="auth-logo">Caminhos</Link>
+        <p className="auth-sub">Bem-vindo de volta.</p>
 
-      <p style={styles.instrucao}>Escaneie com o app do seu banco ou copie o código:</p>
+        <form onSubmit={handleSubmit} className="auth-form">
 
-      <div style={styles.codigoBox}>
-        <code style={styles.codigo}>{pix.qr_code}</code>
+          <div className="auth-field">
+            <label>E-mail</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="seu@email.com"
+              value={form.email}
+              onChange={handleChange}
+              autoFocus
+            />
+          </div>
+
+          <div className="auth-field">
+            <label>Senha</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Sua senha"
+              value={form.password}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div style={{ textAlign: 'right' }}>
+            <Link
+              to="/esqueci-senha"
+              style={{ fontSize: '13px', color: 'var(--roxo-medio)', textDecoration: 'none' }}
+            >
+              Esqueci minha senha
+            </Link>
+          </div>
+
+          {erro && <p className="auth-erro">{erro}</p>}
+
+          <button type="submit" className="auth-btn" disabled={loading}>
+            {loading ? 'Entrando...' : 'Entrar'}
+          </button>
+
+        </form>
+
+        <p className="auth-link">
+          Ainda nao tem conta?{' '}
+          <Link to="/cadastro">Criar gratuitamente</Link>
+        </p>
+
       </div>
-
-      <button onClick={copiarCodigo} style={styles.botao}>
-        📋 Copiar código PIX
-      </button>
-
-      <p style={styles.aguardando}>
-        Aguardando pagamento... esta tela atualiza sozinha.
-      </p>
     </div>
   )
-}
-
-const styles = {
-  container: {
-    maxWidth: 480,
-    margin: '2rem auto',
-    padding: '2rem',
-    fontFamily: 'sans-serif',
-    textAlign: 'center'
-  },
-  titulo: { color: '#5b21b6', marginBottom: '0.5rem' },
-  sub: { color: '#666', marginBottom: '1.5rem' },
-  qr: { width: 240, height: 240, margin: '0 auto 1rem' },
-  instrucao: { color: '#666', fontSize: '0.9rem', margin: '1rem 0 0.5rem' },
-  codigoBox: {
-    background: '#f5f5f5',
-    padding: '0.75rem',
-    borderRadius: 8,
-    margin: '0.5rem 0',
-    wordBreak: 'break-all',
-    maxHeight: 100,
-    overflow: 'auto'
-  },
-  codigo: { fontSize: '0.7rem', color: '#333' },
-  botao: {
-    background: '#5b21b6',
-    color: 'white',
-    padding: '0.75rem 1.5rem',
-    border: 'none',
-    borderRadius: 8,
-    cursor: 'pointer',
-    fontSize: '1rem',
-    margin: '1rem 0'
-  },
-  aguardando: { color: '#999', fontSize: '0.85rem', marginTop: '1rem' }
 }
