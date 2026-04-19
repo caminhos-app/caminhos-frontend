@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import api from '../services/api'
 
@@ -46,7 +46,7 @@ export default function Pagamento() {
 
   const copiarCodigo = () => {
     navigator.clipboard.writeText(qr_code)
-    alert('Código PIX copiado!')
+    alert('Codigo PIX copiado!')
   }
 
   if (!qr_code) return (
@@ -57,8 +57,8 @@ export default function Pagamento() {
 
   if (statusPag === 'aprovado') return (
     <div style={{padding:'2rem',textAlign:'center',fontFamily:'sans-serif'}}>
-      <h2 style={{color:'#22c55e'}}>✓ Pagamento aprovado!</h2>
-      <p>Liberando seu conteúdo...</p>
+      <h2 style={{color:'#22c55e'}}>Pagamento aprovado!</h2>
+      <p>Liberando seu conteudo...</p>
     </div>
   )
 
@@ -78,7 +78,7 @@ export default function Pagamento() {
       )}
 
       <p style={{color:'#666',fontSize:'0.9rem',margin:'1rem 0 0.5rem'}}>
-        Escaneie com o app do seu banco ou copie o código:
+        Escaneie com o app do seu banco ou copie o codigo:
       </p>
 
       <div style={{background:'#f5f5f5',padding:'0.75rem',borderRadius:8,margin:'0.5rem 0',wordBreak:'break-all',maxHeight:100,overflow:'auto'}}>
@@ -89,7 +89,7 @@ export default function Pagamento() {
         onClick={copiarCodigo}
         style={{background:'#5b21b6',color:'white',padding:'0.75rem 1.5rem',border:'none',borderRadius:8,cursor:'pointer',fontSize:'1rem',margin:'1rem 0'}}
       >
-        📋 Copiar código PIX
+        Copiar codigo PIX
       </button>
 
       <p style={{color:'#999',fontSize:'0.85rem',marginTop:'1rem'}}>
