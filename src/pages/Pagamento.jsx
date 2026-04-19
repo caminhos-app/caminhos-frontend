@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { api } from '../api'
+import api from '../services/api'
 
 export default function Pagamento() {
   const { sessao_id } = useParams()
@@ -13,11 +13,8 @@ export default function Pagamento() {
   useEffect(() => {
     async function criarPix() {
       try {
-        const token = localStorage.getItem('token')
-        const resp = await api.post(`/api/pagamento/pix`, { sessao_id }, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-        setPix(resp.data)
+        const { data } = await api.post('/pagamento/pix', { sessao_id })
+        setPix(data)
       } catch (e) {
         console.error(e)
         setErro('Erro ao gerar PIX. Tente novamente.')
@@ -31,11 +28,8 @@ export default function Pagamento() {
     if (!pix?.payment_id) return
     const interval = setInterval(async () => {
       try {
-        const token = localStorage.getItem('token')
-        const resp = await api.get(`/api/pagamento/status/${pix.payment_id}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-        if (resp.data.status === 'approved') {
+        const { data } = await api.get(`/pagamento/status/${pix.payment_id}`)
+        if (data.status === 'approved') {
           setStatusPag('aprovado')
           clearInterval(interval)
           setTimeout(() => navigate(`/resultado/${sessao_id}?premium=1`), 1500)
