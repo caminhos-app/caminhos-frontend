@@ -1,27 +1,29 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
 import api from '../services/api'
 import './Resultado.css'
 
 const DESCRICOES_MBTI = {
-  INTJ: 'Estrategista Visionário', INTP: 'Pensador Lógico',
-  ENTJ: 'Líder Nato',              ENTP: 'Inovador Debatedor',
-  INFJ: 'Conselheiro Visionário',  INFP: 'Idealista Mediador',
+  INTJ: 'Estrategista Visionario', INTP: 'Pensador Logico',
+  ENTJ: 'Lider Nato',              ENTP: 'Inovador Debatedor',
+  INFJ: 'Conselheiro Visionario',  INFP: 'Idealista Mediador',
   ENFJ: 'Protagonista Inspirador', ENFP: 'Ativista Criativo',
-  ISTJ: 'Executor Confiável',      ISFJ: 'Protetor Dedicado',
+  ISTJ: 'Executor Confiavel',      ISFJ: 'Protetor Dedicado',
   ESTJ: 'Administrador Eficiente', ESFJ: 'Cuidador Social',
-  ISTP: 'Artesão Prático',         ISFP: 'Aventureiro Sensível',
-  ESTP: 'Empreendedor Dinâmico',   ESFP: 'Animador Espontâneo',
+  ISTP: 'Artesao Pratico',         ISFP: 'Aventureiro Sensivel',
+  ESTP: 'Empreendedor Dinamico',   ESFP: 'Animador Espontaneo',
 }
 
 export default function Resultado() {
   const { sessao_id } = useParams()
   const navigate      = useNavigate()
 
-  const [parcial,  setParcial]  = useState(null)
-  const [loading,  setLoading]  = useState(true)
-  const [erro,     setErro]     = useState('')
-  const [pagando,  setPagando]  = useState(false)
+  const [parcial,    setParcial]    = useState(null)
+  const [completo,   setCompleto]   = useState(null)
+  const [loading,    setLoading]    = useState(true)
+  const [erro,       setErro]       = useState('')
+  const [pagando,    setPagando]    = useState(false)
 
   useEffect(() => {
     buscarResultado()
@@ -31,6 +33,16 @@ export default function Resultado() {
     try {
       const { data } = await api.get(`/relatorio/parcial/${sessao_id}`)
       setParcial(data)
+
+      // Se ja pago, busca o relatorio completo tambem
+      if (data.relatorio_pago) {
+        try {
+          const resp = await api.get(`/relatorio/completo/${sessao_id}`)
+          setCompleto(resp.data)
+        } catch (e) {
+          console.error('Erro ao carregar relatorio completo:', e)
+        }
+      }
     } catch (err) {
       setErro('Erro ao carregar seu resultado.')
     } finally {
@@ -79,7 +91,7 @@ export default function Resultado() {
   const mbti     = parcial?.perfil?.mbti      || ''
   const disc     = parcial?.perfil?.disc      || ''
   const eneagrama = parcial?.perfil?.eneagrama || ''
-  const tipo     = DESCRICOES_MBTI[mbti]      || 'Perfil Único'
+  const tipo     = DESCRICOES_MBTI[mbti]      || 'Perfil Unico'
   const insight  = parcial?.insight_gratuito  || ''
   const pago     = parcial?.relatorio_pago
 
@@ -87,13 +99,11 @@ export default function Resultado() {
     <div className="res-root">
       <div className="res-card">
 
-        {/* Header */}
         <div className="res-header">
           <span className="res-logo">Caminhos</span>
-          <span className="res-badge">Módulo 1 — Quem eu sou</span>
+          <span className="res-badge">Modulo 1 — Quem eu sou</span>
         </div>
 
-        {/* Perfil */}
         <div className="res-perfil">
           <div className="res-perfil-glow" />
           <p className="res-perfil-label">Seu perfil</p>
@@ -106,13 +116,11 @@ export default function Resultado() {
           </div>
         </div>
 
-        {/* Insight gratuito */}
         <div className="res-insight">
-          <p className="res-insight-label">✨ Seu insight inicial</p>
+          <p className="res-insight-label">Seu insight inicial</p>
           <p className="res-insight-texto">{insight}</p>
         </div>
 
-        {/* Dimensões */}
         {parcial?.dimensoes?.length > 0 && (
           <div className="res-dimensoes">
             {parcial.dimensoes.map(d => (
@@ -132,15 +140,53 @@ export default function Resultado() {
           </div>
         )}
 
-        {/* Paywall */}
+        {pago && completo?.relatorio && (
+          <div style={{
+            marginTop: '2rem',
+            padding: '2rem',
+            background: 'linear-gradient(to bottom, #faf7ff, #ffffff)',
+            borderRadius: 16,
+            border: '1px solid #e9e3f5',
+          }}>
+            <div style={{
+              display: 'inline-block',
+              background: 'linear-gradient(90deg, #5b21b6, #d97706)',
+              color: 'white',
+              padding: '0.35rem 0.85rem',
+              borderRadius: 20,
+              fontSize: '0.75rem',
+              fontWeight: 600,
+              letterSpacing: '0.5px',
+              marginBottom: '1.5rem',
+            }}>
+              ✨ RELATORIO COMPLETO
+            </div>
+
+            <div style={{
+              fontFamily: 'Georgia, serif',
+              fontSize: '1rem',
+              lineHeight: 1.8,
+              color: '#2d2d2d',
+            }} className="res-markdown">
+              <ReactMarkdown>{completo.relatorio}</ReactMarkdown>
+            </div>
+          </div>
+        )}
+
+        {pago && !completo && (
+          <div style={{padding:'2rem',textAlign:'center',color:'#666'}}>
+            <p>Carregando seu relatorio completo...</p>
+          </div>
+        )}
+
         {!pago && (
           <div className="res-paywall">
             <div className="res-paywall-blur">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Seu relatório completo inclui análise profunda dos seus padrões comportamentais, pontos cegos e plano de ação de 30 dias...</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Seu relatorio completo inclui analise profunda dos seus padroes comportamentais, pontos cegos e plano de acao de 30 dias...</p>
             </div>
             <div className="res-paywall-cta">
-              <p className="res-paywall-titulo">Desbloqueie seu relatório completo</p>
-              <p className="res-paywall-sub">11 seções · Plano de ação · PDF para baixar</p>
+              <p className="res-paywall-titulo">Desbloqueie seu relatorio completo</p>
+              <p className="res-paywall-sub">11 secoes · Plano de acao · PDF para baixar</p>
               <button
                 className="res-btn-pagar"
                 onClick={iniciarPagamento}
@@ -148,19 +194,18 @@ export default function Resultado() {
               >
                 {pagando ? 'Aguarde...' : 'Desbloquear por R$29 →'}
               </button>
-              <p className="res-paywall-garantia">🔒 Pagamento seguro via Pix · Acesso imediato</p>
+              <p className="res-paywall-garantia">Pagamento seguro via Pix · Acesso imediato</p>
             </div>
           </div>
         )}
 
-        {/* Próximo módulo */}
         <div className="res-proximo">
-          <p className="res-proximo-label">Próximo passo</p>
+          <p className="res-proximo-label">Proximo passo</p>
           <button
             className="res-btn-skyai"
             onClick={() => navigate('/skyai')}
           >
-            ✨ Descobrir meu mapa astral → SkyAI
+            Descobrir meu mapa astral → SkyAI
           </button>
         </div>
 
