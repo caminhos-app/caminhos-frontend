@@ -24,6 +24,7 @@ export default function Resultado() {
   const [loading,    setLoading]    = useState(true)
   const [erro,       setErro]       = useState('')
   const [pagando,    setPagando]    = useState(false)
+  const [baixandoPdf, setBaixandoPdf] = useState(false)
 
   useEffect(() => {
     buscarResultado()
@@ -34,7 +35,6 @@ export default function Resultado() {
       const { data } = await api.get(`/relatorio/parcial/${sessao_id}`)
       setParcial(data)
 
-      // Se ja pago, busca o relatorio completo tambem
       if (data.relatorio_pago) {
         try {
           const resp = await api.get(`/relatorio/completo/${sessao_id}`)
@@ -70,6 +70,29 @@ export default function Resultado() {
       setErro('Erro ao iniciar pagamento. Tente novamente.')
     } finally {
       setPagando(false)
+    }
+  }
+
+  async function baixarPdf() {
+    setBaixandoPdf(true)
+    try {
+      const resp = await api.get(`/relatorio/completo/${sessao_id}/pdf`, {
+        responseType: 'blob',
+      })
+      const url = window.URL.createObjectURL(new Blob([resp.data], { type: 'application/pdf' }))
+      const link = document.createElement('a')
+      link.href = url
+      const nome = (parcial?.perfil?.mbti || 'relatorio').toLowerCase()
+      link.setAttribute('download', `caminhos-${nome}.pdf`)
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      window.URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error(err)
+      alert('Erro ao baixar PDF. Tente novamente.')
+    } finally {
+      setBaixandoPdf(false)
     }
   }
 
@@ -149,17 +172,46 @@ export default function Resultado() {
             border: '1px solid #e9e3f5',
           }}>
             <div style={{
-              display: 'inline-block',
-              background: 'linear-gradient(90deg, #5b21b6, #d97706)',
-              color: 'white',
-              padding: '0.35rem 0.85rem',
-              borderRadius: 20,
-              fontSize: '0.75rem',
-              fontWeight: 600,
-              letterSpacing: '0.5px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '1rem',
               marginBottom: '1.5rem',
             }}>
-              ✨ RELATORIO COMPLETO
+              <div style={{
+                display: 'inline-block',
+                background: 'linear-gradient(90deg, #5b21b6, #d97706)',
+                color: 'white',
+                padding: '0.35rem 0.85rem',
+                borderRadius: 20,
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                letterSpacing: '0.5px',
+              }}>
+                ✨ RELATORIO COMPLETO
+              </div>
+
+              <button
+                onClick={baixarPdf}
+                disabled={baixandoPdf}
+                style={{
+                  background: baixandoPdf ? '#a78bfa' : '#5b21b6',
+                  color: 'white',
+                  padding: '0.6rem 1.2rem',
+                  border: 'none',
+                  borderRadius: 8,
+                  cursor: baixandoPdf ? 'wait' : 'pointer',
+                  fontSize: '0.9rem',
+                  fontWeight: 600,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  transition: 'background 0.2s',
+                }}
+              >
+                {baixandoPdf ? 'Gerando PDF...' : '📥 Baixar PDF'}
+              </button>
             </div>
 
             <div style={{
@@ -169,6 +221,34 @@ export default function Resultado() {
               color: '#2d2d2d',
             }} className="res-markdown">
               <ReactMarkdown>{completo.relatorio}</ReactMarkdown>
+            </div>
+
+            <div style={{
+              marginTop: '2rem',
+              paddingTop: '1.5rem',
+              borderTop: '1px solid #e9e3f5',
+              textAlign: 'center',
+            }}>
+              <button
+                onClick={baixarPdf}
+                disabled={baixandoPdf}
+                style={{
+                  background: 'linear-gradient(90deg, #5b21b6, #d97706)',
+                  color: 'white',
+                  padding: '0.85rem 2rem',
+                  border: 'none',
+                  borderRadius: 10,
+                  cursor: baixandoPdf ? 'wait' : 'pointer',
+                  fontSize: '1rem',
+                  fontWeight: 600,
+                  boxShadow: '0 4px 12px rgba(91, 33, 182, 0.25)',
+                }}
+              >
+                {baixandoPdf ? 'Gerando seu PDF...' : '📥 Baixar relatorio completo em PDF'}
+              </button>
+              <p style={{fontSize:'0.8rem', color:'#6b7280', marginTop:'0.5rem'}}>
+                Guarde seu relatorio para consultar quando quiser
+              </p>
             </div>
           </div>
         )}
